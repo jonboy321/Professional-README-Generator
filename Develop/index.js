@@ -1,14 +1,11 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { title } = require('process');
+const generateMarkdown = require('./utils/generateMarkdown');
+const path = require('path');
+
 // TODO: Create an array of questions for user input
-const questions = [];
-
-const generateReadME = ({title, description, table, install, usage, license, contributing, tests, email, github}) =>
-``;
-
-inquirer.prompt([
+const questions = [
     {
         type: 'input',
         name: 'title',
@@ -21,11 +18,6 @@ inquirer.prompt([
     },
     {
         type: 'input',
-        name: 'table',
-        message: 'Insert a Table of Contents',
-    },
-    {
-        type: 'input',
         name: 'install',
         message: 'Enter installation instructions.',
     },
@@ -35,9 +27,10 @@ inquirer.prompt([
         message: 'Enter usage.',
     },
     {
-        type: 'input',
+        type: 'list',
         name: 'license',
-        message: 'Enter license type.',
+        message: 'Please choose license type',
+        choices: ['MIT', 'Apache', 'ISC', 'none'],
     },
     {
         type: 'input',
@@ -46,7 +39,7 @@ inquirer.prompt([
     },
     {
         type: 'input',
-        name: 'tests',
+        name: 'test',
         message: 'Enter test instructions.',
     },
     {
@@ -59,13 +52,21 @@ inquirer.prompt([
         name: 'github',
         message: 'Enter gitHub username.'
     }
-])
+  ];
+
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+}
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer.prompt(questions)
+    .then((response) => {writeToFile('README.md', generateMarkdown({...response}))   
+    }
+    )
+}
 
 // Function call to initialize app
 init();
