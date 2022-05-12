@@ -46,8 +46,9 @@ function generateMarkdown(data) {
   ${data.contributing}
   ## Tests
   ${data.test}
-  ## Additional Info
+  ## Contact Me
   ${data.email}
+  ## Additional Info
   Check out my gitHub at https://github.com/${data.github}`;
 }
 
